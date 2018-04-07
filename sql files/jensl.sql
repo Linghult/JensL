@@ -262,6 +262,23 @@ INSERT INTO `roles` VALUES (1,'cashier'),(2,'manager'),(3,'cleaner');
 UNLOCK TABLES;
 
 --
+-- Temporary view structure for view `vw_list_all_comedies`
+--
+
+DROP TABLE IF EXISTS `vw_list_all_comedies`;
+/*!50001 DROP VIEW IF EXISTS `vw_list_all_comedies`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `vw_list_all_comedies` AS SELECT 
+ 1 AS `Title`,
+ 1 AS `MovieID`,
+ 1 AS `Genre`,
+ 1 AS `Producer`,
+ 1 AS `ReleaseYear`,
+ 1 AS `Publisher`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Temporary view structure for view `vw_list_all_movies`
 --
 
@@ -285,6 +302,24 @@ SET character_set_client = @saved_cs_client;
 --
 -- Dumping routines for database 'jensl'
 --
+
+--
+-- Final view structure for view `vw_list_all_comedies`
+--
+
+/*!50001 DROP VIEW IF EXISTS `vw_list_all_comedies`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`Linghult`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `vw_list_all_comedies` AS select `m`.`title` AS `Title`,`m`.`movieID` AS `MovieID`,`m`.`genre` AS `Genre`,`m`.`producer` AS `Producer`,`m`.`releaseYear` AS `ReleaseYear`,`p`.`publisherName` AS `Publisher` from (`movies` `m` left join `publishers` `p` on((`p`.`publisherID` = `m`.`PublisherID`))) where (`m`.`genre` = 'comedy') group by `m`.`title` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 
 --
 -- Final view structure for view `vw_list_all_movies`
@@ -313,4 +348,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-07 15:08:42
+-- Dump completed on 2018-04-07 15:16:28
