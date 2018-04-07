@@ -81,6 +81,7 @@ CREATE TABLE `copies` (
   `movieID` int(11) NOT NULL,
   `customerID` int(11) DEFAULT NULL,
   `employeeID` int(11) DEFAULT NULL,
+  `rentDate` date DEFAULT NULL,
   PRIMARY KEY (`copyID`),
   KEY `fk_Copies_Movies1_idx` (`movieID`),
   KEY `fk_Copies_customers1_idx` (`customerID`),
@@ -94,7 +95,7 @@ CREATE TABLE `copies` (
 
 LOCK TABLES `copies` WRITE;
 /*!40000 ALTER TABLE `copies` DISABLE KEYS */;
-INSERT INTO `copies` VALUES (1,2,1,2),(2,2,3,1),(3,3,3,1),(4,3,4,2),(5,3,5,1),(6,3,6,2),(7,4,8,1),(8,5,9,2),(9,6,10,1),(10,7,11,2),(11,8,12,1),(12,9,13,2),(13,10,2,1),(14,11,7,2),(15,5,NULL,NULL),(16,6,NULL,NULL),(17,7,NULL,NULL),(18,8,NULL,NULL),(19,9,NULL,NULL);
+INSERT INTO `copies` VALUES (1,2,1,2,'2018-04-03'),(2,2,3,1,'2018-04-02'),(3,3,3,1,'2018-04-01'),(4,3,4,2,'2018-04-06'),(5,3,5,1,'2018-04-01'),(6,3,6,2,'2018-03-31'),(7,4,8,1,'2018-03-30'),(8,5,9,2,'2018-03-29'),(9,6,10,1,'2018-03-28'),(10,7,11,2,'2018-03-27'),(11,8,12,1,'2018-03-26'),(12,9,13,2,'2018-03-26'),(13,10,2,1,'2018-03-30'),(14,11,7,2,'2018-04-04'),(15,5,NULL,NULL,NULL),(16,6,NULL,NULL,NULL),(17,7,NULL,NULL,NULL),(18,8,NULL,NULL,NULL),(19,9,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `copies` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -377,4 +378,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-07 16:32:47
+-- Dump completed on 2018-04-07 16:40:01
