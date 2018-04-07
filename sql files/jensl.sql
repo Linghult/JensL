@@ -79,11 +79,13 @@ DROP TABLE IF EXISTS `copies`;
 CREATE TABLE `copies` (
   `copyID` int(11) NOT NULL AUTO_INCREMENT,
   `movieID` int(11) NOT NULL,
-  `customerID` int(11) NOT NULL,
+  `customerID` int(11) DEFAULT NULL,
+  `employeeID` int(11) DEFAULT NULL,
   PRIMARY KEY (`copyID`),
   KEY `fk_Copies_Movies1_idx` (`movieID`),
-  KEY `fk_Copies_customers1_idx` (`customerID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `fk_Copies_customers1_idx` (`customerID`),
+  KEY `employeeID_idx` (`employeeID`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,6 +94,7 @@ CREATE TABLE `copies` (
 
 LOCK TABLES `copies` WRITE;
 /*!40000 ALTER TABLE `copies` DISABLE KEYS */;
+INSERT INTO `copies` VALUES (1,2,1,2),(2,2,3,1),(3,3,3,1),(4,3,4,2),(5,3,5,1),(6,3,6,2),(7,4,8,1),(8,5,9,2),(9,6,10,1),(10,7,11,2),(11,8,12,1),(12,9,13,2),(13,10,2,1),(14,11,7,2);
 /*!40000 ALTER TABLE `copies` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,9 +110,9 @@ CREATE TABLE `customers` (
   `firstName` varchar(45) DEFAULT NULL,
   `lastName` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
-  `Adressess_adressID` int(11) NOT NULL,
+  `adressID` int(11) NOT NULL,
   PRIMARY KEY (`customerID`),
-  KEY `fk_Persons_Adressess1_idx` (`Adressess_adressID`)
+  KEY `fk_Persons_Adressess1_idx` (`adressID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -135,12 +138,9 @@ CREATE TABLE `employees` (
   `firstName` varchar(45) DEFAULT NULL,
   `lastName` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
-  `roleID` int(11) NOT NULL,
   `adressID` int(11) NOT NULL,
   PRIMARY KEY (`employeeID`),
-  KEY `fk_Persons_Roles1_idx` (`roleID`),
-  KEY `fk_Persons_Adressess1_idx` (`adressID`),
-  CONSTRAINT `fk_Persons_Roles1` FOREIGN KEY (`roleID`) REFERENCES `roles` (`roleID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `fk_Persons_Adressess1_idx` (`adressID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -150,7 +150,7 @@ CREATE TABLE `employees` (
 
 LOCK TABLES `employees` WRITE;
 /*!40000 ALTER TABLE `employees` DISABLE KEYS */;
-INSERT INTO `employees` VALUES (1,'Lisa','Lind','l.lind@gmail.com',1,0),(2,'Dark','Ness','d.ness@gmail.com',2,0),(3,'Pero','Blanco','p.blanco@gmail.com',3,0),(4,'Sven','Svensson','s.svensson@gmail.com',1,0);
+INSERT INTO `employees` VALUES (1,'Lisa','Lind','l.lind@gmail.com',0),(2,'Dark','Ness','d.ness@gmail.com',0),(3,'Pero','Blanco','p.blanco@gmail.com',0),(4,'Sven','Svensson','s.svensson@gmail.com',0);
 /*!40000 ALTER TABLE `employees` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -344,4 +344,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-07 15:40:49
+-- Dump completed on 2018-04-07 16:05:02
