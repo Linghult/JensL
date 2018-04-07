@@ -85,7 +85,7 @@ CREATE TABLE `copies` (
   KEY `fk_Copies_Movies1_idx` (`movieID`),
   KEY `fk_Copies_customers1_idx` (`customerID`),
   KEY `employeeID_idx` (`employeeID`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,7 +94,7 @@ CREATE TABLE `copies` (
 
 LOCK TABLES `copies` WRITE;
 /*!40000 ALTER TABLE `copies` DISABLE KEYS */;
-INSERT INTO `copies` VALUES (1,2,1,2),(2,2,3,1),(3,3,3,1),(4,3,4,2),(5,3,5,1),(6,3,6,2),(7,4,8,1),(8,5,9,2),(9,6,10,1),(10,7,11,2),(11,8,12,1),(12,9,13,2),(13,10,2,1),(14,11,7,2),(15,5,NULL,NULL),(16,6,NULL,NULL),(17,7,NULL,NULL),(18,8,NULL,NULL),(19,9,NULL,NULL);
+INSERT INTO `copies` VALUES (1,2,1,2),(2,2,3,1),(3,3,3,1),(4,3,4,2),(5,3,5,1),(6,3,6,2),(7,4,8,1),(8,5,9,2),(9,6,10,1),(10,7,11,2),(11,8,12,1),(12,9,13,2),(13,10,2,1),(14,11,7,2);
 /*!40000 ALTER TABLE `copies` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -292,21 +292,6 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary view structure for view `vw_list_all_rented_movies`
---
-
-DROP TABLE IF EXISTS `vw_list_all_rented_movies`;
-/*!50001 DROP VIEW IF EXISTS `vw_list_all_rented_movies`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE VIEW `vw_list_all_rented_movies` AS SELECT 
- 1 AS `copyID`,
- 1 AS `Title`,
- 1 AS `Customer`,
- 1 AS `Employee`*/;
-SET character_set_client = @saved_cs_client;
-
---
 -- Dumping events for database 'jensl'
 --
 
@@ -349,24 +334,6 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
-
---
--- Final view structure for view `vw_list_all_rented_movies`
---
-
-/*!50001 DROP VIEW IF EXISTS `vw_list_all_rented_movies`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8 */;
-/*!50001 SET character_set_results     = utf8 */;
-/*!50001 SET collation_connection      = utf8_general_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`Linghult`@`%` SQL SECURITY DEFINER */
-/*!50001 VIEW `vw_list_all_rented_movies` AS select `c`.`copyID` AS `copyID`,`m`.`title` AS `Title`,concat(`cu`.`firstName`,' ',`cu`.`lastName`) AS `Customer`,concat(`em`.`firstName`,' ',`em`.`lastName`) AS `Employee` from (((`copies` `c` left join `movies` `m` on((`m`.`movieID` = `c`.`movieID`))) left join `customers` `cu` on((`cu`.`customerID` = `c`.`customerID`))) left join `employees` `em` on((`em`.`employeeID` = `c`.`employeeID`))) where ((`c`.`employeeID` is not null) and (`c`.`customerID` is not null)) order by `c`.`movieID` */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -377,4 +344,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-07 16:30:07
+-- Dump completed on 2018-04-07 16:05:02
