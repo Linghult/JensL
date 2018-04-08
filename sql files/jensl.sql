@@ -96,7 +96,7 @@ CREATE TABLE `copies` (
 
 LOCK TABLES `copies` WRITE;
 /*!40000 ALTER TABLE `copies` DISABLE KEYS */;
-INSERT INTO `copies` VALUES (1,2,3,1,'2018-05-03','no'),(2,3,3,1,'2018-05-03','no'),(3,3,3,1,'2018-04-01','no'),(4,3,4,2,'2018-04-06','no'),(5,3,5,1,'2018-04-01','no'),(6,3,6,2,'2018-03-31','no'),(7,4,8,1,'2018-03-30','no'),(8,5,9,2,'2018-03-29','no'),(9,6,10,1,'2018-03-28','no'),(10,7,11,2,'2018-03-27','no'),(11,8,12,1,'2018-03-21','no'),(12,9,13,3,'2018-03-26','no'),(13,10,2,4,'2018-03-30','no'),(14,11,7,4,'2018-04-04','no'),(15,5,NULL,NULL,NULL,'yes'),(16,6,NULL,NULL,NULL,'yes'),(17,7,NULL,NULL,NULL,'yes'),(18,8,NULL,NULL,NULL,'yes'),(19,9,NULL,NULL,NULL,'yes');
+INSERT INTO `copies` VALUES (1,2,3,1,'2018-05-03','no'),(2,6,4,1,'2018-05-02','no'),(3,3,3,1,'2018-04-01','no'),(4,3,4,2,'2018-04-06','no'),(5,3,5,1,'2018-04-01','no'),(6,3,6,2,'2018-03-31','no'),(7,4,8,1,'2018-03-30','no'),(8,5,9,2,'2018-03-29','no'),(9,6,10,1,'2018-03-28','no'),(10,7,11,2,'2018-03-27','no'),(11,8,12,1,'2018-03-21','no'),(12,9,13,3,'2018-03-26','no'),(13,10,2,4,'2018-03-30','no'),(14,11,7,4,'2018-04-04','no'),(15,5,NULL,NULL,NULL,'yes'),(16,6,NULL,NULL,NULL,'yes'),(17,7,NULL,NULL,NULL,'yes'),(18,8,NULL,NULL,NULL,'yes'),(19,9,NULL,NULL,NULL,'yes');
 /*!40000 ALTER TABLE `copies` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -343,6 +343,28 @@ SET character_set_client = @saved_cs_client;
 --
 -- Dumping routines for database 'jensl'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `sp_rental` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`Linghult`@`%` PROCEDURE `sp_rental`(IN sp_copyID INT, sp_movieID INT, sp_customerID int(11), sp_employeeID INT(11), sp_rentDate date, sp_availability enum('yes','no'))
+BEGIN
+INSERT INTO copies(copyID, movieID, customerID,employeeID,rentDate, availability)
+VALUES (sp_copyID, sp_movieID, sp_customerID, sp_employeeID, sp_rentDate, sp_availability)
+ON duplicate key UPDATE copyID = sp_copyID ,movieID = sp_movieID, customerID = sp_customerID, employeeID = sp_employeeID, rentDate = sp_rentDate, availability = sp_availability;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Final view structure for view `vw_list_all_comedies`
@@ -443,4 +465,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-08 18:26:28
+-- Dump completed on 2018-04-08 19:56:47
