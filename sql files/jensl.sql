@@ -308,6 +308,21 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
+-- Temporary view structure for view `vw_list_overdue_rentals`
+--
+
+DROP TABLE IF EXISTS `vw_list_overdue_rentals`;
+/*!50001 DROP VIEW IF EXISTS `vw_list_overdue_rentals`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `vw_list_overdue_rentals` AS SELECT 
+ 1 AS `copyID`,
+ 1 AS `Title`,
+ 1 AS `Customer`,
+ 1 AS `RentDate`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Dumping events for database 'jensl'
 --
 
@@ -368,6 +383,24 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `vw_list_overdue_rentals`
+--
+
+/*!50001 DROP VIEW IF EXISTS `vw_list_overdue_rentals`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`Linghult`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `vw_list_overdue_rentals` AS select `c`.`copyID` AS `copyID`,`m`.`title` AS `Title`,concat(`cu`.`firstName`,' ',`cu`.`lastName`) AS `Customer`,`c`.`rentDate` AS `RentDate` from ((`copies` `c` left join `movies` `m` on((`m`.`movieID` = `c`.`movieID`))) left join `customers` `cu` on((`cu`.`customerID` = `c`.`customerID`))) where ((`c`.`employeeID` is not null) and (`c`.`customerID` is not null) and ((to_days(curdate()) - to_days(`c`.`rentDate`)) > 4)) order by `c`.`rentDate` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -378,4 +411,4 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-07 16:40:01
+-- Dump completed on 2018-04-08 14:05:49
