@@ -309,6 +309,19 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
+-- Temporary view structure for view `vw_list_employees_rentals`
+--
+
+DROP TABLE IF EXISTS `vw_list_employees_rentals`;
+/*!50001 DROP VIEW IF EXISTS `vw_list_employees_rentals`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `vw_list_employees_rentals` AS SELECT 
+ 1 AS `Employee`,
+ 1 AS `Copies Rented Out`*/;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Temporary view structure for view `vw_list_overdue_rentals`
 --
 
@@ -381,6 +394,24 @@ SET character_set_client = @saved_cs_client;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`Linghult`@`%` SQL SECURITY DEFINER */
 /*!50001 VIEW `vw_list_all_rented_movies` AS select `c`.`copyID` AS `copyID`,`m`.`title` AS `Title`,concat(`cu`.`firstName`,' ',`cu`.`lastName`) AS `Customer`,concat(`em`.`firstName`,' ',`em`.`lastName`) AS `Employee` from (((`copies` `c` left join `movies` `m` on((`m`.`movieID` = `c`.`movieID`))) left join `customers` `cu` on((`cu`.`customerID` = `c`.`customerID`))) left join `employees` `em` on((`em`.`employeeID` = `c`.`employeeID`))) where ((`c`.`employeeID` is not null) and (`c`.`customerID` is not null)) order by `c`.`movieID` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `vw_list_employees_rentals`
+--
+
+/*!50001 DROP VIEW IF EXISTS `vw_list_employees_rentals`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`Linghult`@`%` SQL SECURITY DEFINER */
+/*!50001 VIEW `vw_list_employees_rentals` AS select concat(`e`.`firstName`,' ',`e`.`lastName`) AS `Employee`,count(0) AS `Copies Rented Out` from (`copies` `c` left join `employees` `e` on((`e`.`employeeID` = `c`.`employeeID`))) where (`e`.`employeeID` is not null) group by `e`.`employeeID` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
