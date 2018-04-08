@@ -43,6 +43,33 @@ INSERT INTO `actor` VALUES (1,'Tom ','Cruise'),(2,'Brad','Pitt'),(3,'Gary','Oldm
 UNLOCK TABLES;
 
 --
+-- Table structure for table `actor_has_movies`
+--
+
+DROP TABLE IF EXISTS `actor_has_movies`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `actor_has_movies` (
+  `actorID` int(11) NOT NULL,
+  `movieID` int(11) NOT NULL,
+  PRIMARY KEY (`actorID`,`movieID`),
+  KEY `fk_actor_has_movies_movies1_idx` (`movieID`),
+  KEY `fk_actor_has_movies_actor1_idx` (`actorID`),
+  CONSTRAINT `fk_actor_has_movies_actor1` FOREIGN KEY (`actorID`) REFERENCES `actor` (`actorID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_actor_has_movies_movies1` FOREIGN KEY (`movieID`) REFERENCES `movies` (`movieID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `actor_has_movies`
+--
+
+LOCK TABLES `actor_has_movies` WRITE;
+/*!40000 ALTER TABLE `actor_has_movies` DISABLE KEYS */;
+/*!40000 ALTER TABLE `actor_has_movies` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `adressess`
 --
 
@@ -84,9 +111,10 @@ CREATE TABLE `copies` (
   `rentDate` date DEFAULT NULL,
   `availability` enum('yes','no') NOT NULL,
   PRIMARY KEY (`copyID`),
-  KEY `fk_Copies_Movies1_idx` (`movieID`),
   KEY `fk_Copies_customers1_idx` (`customerID`),
-  KEY `employeeID_idx` (`employeeID`)
+  KEY `employeeID_idx` (`employeeID`),
+  KEY `fk_copies_movies1_idx` (`movieID`),
+  CONSTRAINT `fk_copies_movies1` FOREIGN KEY (`movieID`) REFERENCES `movies` (`movieID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -96,7 +124,7 @@ CREATE TABLE `copies` (
 
 LOCK TABLES `copies` WRITE;
 /*!40000 ALTER TABLE `copies` DISABLE KEYS */;
-INSERT INTO `copies` VALUES (1,2,3,1,'2018-05-03','no'),(2,6,4,1,'2018-05-02','no'),(3,3,3,1,'2018-04-01','no'),(4,3,4,2,'2018-04-06','no'),(5,3,5,1,'2018-04-01','no'),(6,3,6,2,'2018-03-31','no'),(7,4,8,1,'2018-03-30','no'),(8,5,9,2,'2018-03-29','no'),(9,6,10,1,'2018-03-28','no'),(10,7,11,2,'2018-03-27','no'),(11,8,12,1,'2018-03-21','no'),(12,9,13,3,'2018-03-26','no'),(13,10,2,4,'2018-03-30','no'),(14,11,7,4,'2018-04-04','no'),(15,5,NULL,NULL,NULL,'yes'),(16,6,NULL,NULL,NULL,'yes'),(17,7,NULL,NULL,NULL,'yes'),(18,8,NULL,NULL,NULL,'yes'),(19,9,NULL,NULL,NULL,'yes');
+INSERT INTO `copies` VALUES (1,2,3,1,'2018-05-03','no'),(2,2,4,1,'2018-05-02','no'),(3,3,3,1,'2018-04-01','no'),(4,3,4,2,'2018-04-06','no'),(5,4,5,1,'2018-04-01','no'),(6,4,6,2,'2018-03-31','no'),(7,5,8,1,'2018-03-30','no'),(8,5,9,2,'2018-03-29','no'),(9,6,10,1,'2018-03-28','no'),(10,7,11,2,'2018-03-27','no'),(11,8,12,1,'2018-03-21','no'),(12,9,13,3,'2018-03-26','no'),(13,10,2,4,'2018-03-30','no'),(14,11,7,4,'2018-04-04','no'),(15,0,NULL,NULL,NULL,'yes'),(16,0,NULL,NULL,NULL,'yes'),(17,0,NULL,NULL,NULL,'yes'),(18,0,NULL,NULL,NULL,'yes'),(19,0,NULL,NULL,NULL,'yes');
 /*!40000 ALTER TABLE `copies` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -114,7 +142,8 @@ CREATE TABLE `customers` (
   `email` varchar(45) DEFAULT NULL,
   `adressID` int(11) NOT NULL,
   PRIMARY KEY (`customerID`),
-  KEY `fk_Persons_Adressess1_idx` (`adressID`)
+  KEY `fk_customers_adressess1_idx` (`adressID`),
+  CONSTRAINT `fk_customers_adressess1` FOREIGN KEY (`adressID`) REFERENCES `adressess` (`adressID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -124,7 +153,7 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES (1,'Tuva','Linghult','t.linghult@gmail.com',1),(2,'Tone','Linghult','to.linghult@gmail.com',1),(3,'Ulf','Linghult','u.linghult@gmail.ciom',2),(4,'Helena','Forst','h.fors@gmail.com',2),(5,'Jens','Paulin','j.paulin@gmail.com',3),(6,'Evelyn','Contreras','e.contreras@gmailc.om',3),(7,'Patrik','Sjöberg','p.sjöberg@gmail.com',4),(8,'Liz','Libro','l.libro@gmail.com',5),(9,'Toto','Africa','t.africa@gmail.com',6),(10,'Remem','Ber','r.ber@gmail.com',7),(11,'Callme','Maybe','c.maybe@gmail.com',8),(12,'Wishi','Wasapunkrocker','w.wasapunkrocker@gmail.com',9),(13,'With','Flowers','w.flowers@gmail.com',10);
+INSERT INTO `customers` VALUES (1,'Tuva','Linghult','t.linghult@gmail.com',0),(2,'Tone','Linghult','to.linghult@gmail.com',0),(3,'Ulf','Linghult','u.linghult@gmail.ciom',0),(4,'Helena','Forst','h.fors@gmail.com',0),(5,'Jens','Paulin','j.paulin@gmail.com',0),(6,'Evelyn','Contreras','e.contreras@gmailc.om',0),(7,'Patrik','Sjöberg','p.sjöberg@gmail.com',0),(8,'Liz','Libro','l.libro@gmail.com',0),(9,'Toto','Africa','t.africa@gmail.com',0),(10,'Remem','Ber','r.ber@gmail.com',0),(11,'Callme','Maybe','c.maybe@gmail.com',0),(12,'Wishi','Wasapunkrocker','w.wasapunkrocker@gmail.com',0),(13,'With','Flowers','w.flowers@gmail.com',0);
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,7 +171,8 @@ CREATE TABLE `employees` (
   `email` varchar(45) DEFAULT NULL,
   `adressID` int(11) NOT NULL,
   PRIMARY KEY (`employeeID`),
-  KEY `fk_Persons_Adressess1_idx` (`adressID`)
+  KEY `fk_employees_adressess_idx` (`adressID`),
+  CONSTRAINT `fk_employees_adressess` FOREIGN KEY (`adressID`) REFERENCES `adressess` (`adressID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -168,10 +198,11 @@ CREATE TABLE `movies` (
   `title` varchar(45) DEFAULT NULL,
   `genre` varchar(45) DEFAULT NULL,
   `producer` varchar(45) DEFAULT NULL,
-  `releaseYear` int(4) DEFAULT NULL,
+  `releaseYear` int(11) DEFAULT NULL,
   `publisherID` int(11) NOT NULL,
   PRIMARY KEY (`movieID`),
-  KEY `fk_Movies_Publishers1_idx` (`publisherID`)
+  KEY `fk_movies_publishers1_idx` (`publisherID`),
+  CONSTRAINT `fk_movies_publishers1` FOREIGN KEY (`publisherID`) REFERENCES `publishers` (`publisherID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -181,34 +212,8 @@ CREATE TABLE `movies` (
 
 LOCK TABLES `movies` WRITE;
 /*!40000 ALTER TABLE `movies` DISABLE KEYS */;
-INSERT INTO `movies` VALUES (2,'Where The Wild Things Are','horror','Jay Franco',1999,1),(3,'Boondock Saints','action','Master Windu',1978,1),(4,'Terminator','action','Who Knew',1997,2),(5,'Babylon','history','Babe Ruth',2015,9),(6,'Baywatch','comedy','Love Hamburgers',2013,3),(7,'Facebook INC','drama','Daryl Flower',2010,4),(8,'Shreck','comedy','Donkey Mcdonk',2001,5),(9,'Boulevard Of Dreams','romance','Elmo Marks',2000,6),(10,'Dank Memes','comedy','Michael Cera',2004,7),(11,'Dunder Mifflin','romance','Michael Scott',2005,8);
+INSERT INTO `movies` VALUES (2,'Where The Wild Things Are','horror','Jay Franco',1999,1),(3,'Boondock Saints','action','Master Windu',1978,2),(4,'Terminator','action','Who Knew',1997,3),(5,'Babylon','history','Babe Ruth',2015,4),(6,'Baywatch','comedy','Love Hamburgers',2013,5),(7,'Facebook INC','drama','Daryl Flower',2010,6),(8,'Shreck','comedy','Donkey Mcdonk',2001,7),(9,'Boulevard Of Dreams','romance','Elmo Marks',2000,1),(10,'Dank Memes','comedy','Michael Cera',2004,2),(11,'Dunder Mifflin','romance','Michael Scott',2005,3);
 /*!40000 ALTER TABLE `movies` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `movies_has_actor`
---
-
-DROP TABLE IF EXISTS `movies_has_actor`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `movies_has_actor` (
-  `movieID` int(11) NOT NULL,
-  `actorID` int(11) NOT NULL,
-  PRIMARY KEY (`movieID`,`actorID`),
-  KEY `fk_Movies_has_Actor_Actor1_idx` (`actorID`),
-  KEY `fk_Movies_has_Actor_Movies1_idx` (`movieID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `movies_has_actor`
---
-
-LOCK TABLES `movies_has_actor` WRITE;
-/*!40000 ALTER TABLE `movies_has_actor` DISABLE KEYS */;
-INSERT INTO `movies_has_actor` VALUES (2,1),(11,1),(2,2),(10,2),(2,3),(9,3),(2,4),(8,4),(2,5),(7,5),(2,6),(6,6),(2,7),(5,7),(3,8),(4,8),(3,9),(2,10),(4,10),(2,11),(4,11),(5,12),(5,13),(6,14),(6,15),(6,16),(7,17),(7,18),(8,19),(9,20),(10,21),(11,22),(11,23);
-/*!40000 ALTER TABLE `movies_has_actor` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -465,4 +470,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-08 19:56:47
+-- Dump completed on 2018-04-08 21:42:31
